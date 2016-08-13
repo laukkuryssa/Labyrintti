@@ -38,7 +38,7 @@ public class Taulukko {
             for (int j = 0; j < kokoy; j++) {
                 Solmu solmu = new Solmu(i, j);
                 if (arpoja.nextDouble() < SeinanTodnak) {
-                    solmu.setPaasyFalse();
+                    solmu.setPaasy(false);
                     solmu.setArvo('E');
                     solmu.setPaino(kokox*kokoy+3);
                 }
@@ -57,15 +57,27 @@ public class Taulukko {
     public void haeNaapurit(Solmu solmu) {
         if (solmu.getX() != 0) {
             solmu.muokkaaVieruslistaa(taulukko[solmu.getX()-1][solmu.getY()], 0);
+            if (!solmu.getVieruslista()[0].isPaasy()) {
+            solmu.muokkaaVieruslistaa(null, 0);
+            }
         }
         if (solmu.getY() != 0) {
             solmu.muokkaaVieruslistaa(taulukko[solmu.getX()][solmu.getY()-1], 1);
+            if (!solmu.getVieruslista()[1].isPaasy()) {
+            solmu.muokkaaVieruslistaa(null, 1);
+            }
         }
         if (solmu.getX() != kokox-1) {
             solmu.muokkaaVieruslistaa(taulukko[solmu.getX()+1][solmu.getY()], 2);
+            if (!solmu.getVieruslista()[2].isPaasy()) {
+            solmu.muokkaaVieruslistaa(null, 2);
+            }
         }
         if (solmu.getY() != kokoy-1) {
             solmu.muokkaaVieruslistaa(taulukko[solmu.getX()][solmu.getY()+1], 3);
+            if (!solmu.getVieruslista()[3].isPaasy()) {
+            solmu.muokkaaVieruslistaa(null, 3);
+            }
         }         
     }
     

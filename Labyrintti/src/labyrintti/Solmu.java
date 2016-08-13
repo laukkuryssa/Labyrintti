@@ -8,17 +8,17 @@ dijkstrassa, boolean kertoo solmun merkityksen labyrintissä ja vieruslista on
 package labyrintti;
 
 public class Solmu {
-    private int prioriteetti;
     private int x;
     private int y;
     private char arvo;
     private boolean paasy;
     private int paino;
+    private int jnro;
     private Solmu[] vieruslista;
 
     public Solmu(int x, int y) {
-        this.prioriteetti = 0;
         this.x = x;
+        this.jnro = 1;
         this.y = y;
         this.arvo = 'P';
         this.paasy = true;
@@ -29,26 +29,42 @@ public class Solmu {
         }
     }
     
+    public void muokkaaVieruslistaa(Solmu s, int paikka) {
+        this.vieruslista[paikka] = s;
+    }
+
     public char getArvo() {
         return arvo;
     }
-    
-    public int getX() {
-        return x;
+
+    public void setArvo(char arvo) {
+        this.arvo = arvo;
     }
 
-    public int getY() {
-        return y;
+    public int getJnro() {
+        return jnro;
     }
 
-    public int getPrioriteetti() {
-        return prioriteetti;
+    public void setJnro(int jnro) {
+        this.jnro = jnro;
     }
-    
+
     public int getPaino() {
-        return this.paino;
+        return paino;
     }
-    
+
+    public void setPaino(int paino) {
+        this.paino = paino;
+    }
+
+    public boolean isPaasy() {
+        return paasy;
+    }
+
+    public void setPaasy(boolean paasy) {
+        this.paasy = paasy;
+    }
+
     public Solmu[] getVieruslista() {
         return vieruslista;
     }
@@ -56,38 +72,21 @@ public class Solmu {
     public void setVieruslista(Solmu[] vieruslista) {
         this.vieruslista = vieruslista;
     }
-    
-    public void muokkaaVieruslistaa(Solmu s, int paikka) {
-        this.vieruslista[paikka] = s;
-    }
 
-    public void setArvo(char arvo) {
-        this.arvo = arvo;
+    public int getX() {
+        return x;
     }
 
     public void setX(int x) {
         this.x = x;
     }
 
+    public int getY() {
+        return y;
+    }
+
     public void setY(int y) {
         this.y = y;
     }
-    
-    public void setPaasyFalse() {
-        this.paasy = false;
-    }
-    
-    public void setPaasyTrue() {
-        this.paasy = true;
-    }
-    
-    public void setPaino(int i) {
-        this.paino = i;
-    }
-
-    public void setPrioriteetti(int prioriteetti) {
-        this.prioriteetti = prioriteetti;
-    }
-    
     
 }

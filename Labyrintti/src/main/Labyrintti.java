@@ -21,7 +21,7 @@ public class Labyrintti {
         Taulukko labyrintti = new Taulukko(20,20);
         labyrintti.luoTaulukko(0.15);
         labyrintti.tulosta();
-        Dijkstra dijkstra = new Dijkstra(20,20, labyrintti, 10, 10, 0, 0);
+        Dijkstra dijkstra = new Dijkstra(20,20, labyrintti, 10, 10, 1, 1);
         dijkstra.initialiseSingleSource();
         dijkstra.suoritaDijkstra();
         dijkstra.lyhinPolku();
