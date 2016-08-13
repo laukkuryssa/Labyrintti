@@ -5,6 +5,9 @@
  */
 package main;
 
+import labyrintti.Taulukko;
+import tietorakenteet.Dijkstra;
+
 /**
  *
  * @author timohaut
@@ -15,7 +18,15 @@ public class Labyrintti {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Taulukko labyrintti = new Taulukko(20,20);
+        labyrintti.luoTaulukko(0.15);
+        labyrintti.tulosta();
+        Dijkstra dijkstra = new Dijkstra(20,20, labyrintti, 10, 10, 0, 0);
+        dijkstra.initialiseSingleSource();
+        dijkstra.suoritaDijkstra();
+        dijkstra.lyhinPolku();
+        labyrintti.tulosta();
+        
     }
     
 }

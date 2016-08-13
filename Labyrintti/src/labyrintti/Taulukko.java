@@ -68,6 +68,16 @@ public class Taulukko {
             solmu.muokkaaVieruslistaa(taulukko[solmu.getX()][solmu.getY()+1], 3);
         }         
     }
+    
+    public void tulosta() {
+        for (int i = 0; i < kokoy; i++) {
+            System.out.println("");
+            for (int j = 0; j < kokox; j++) {
+                System.out.print(taulukko[j][i].getArvo());
+            }
+        }
+        System.out.println("");
+    }
 
     public Solmu[][] getTaulukko() {
         return taulukko;
@@ -79,6 +89,10 @@ public class Taulukko {
 
     public int getKokoy() {
         return kokoy;
+    }
+    
+    public Solmu getSolmu(int x, int y) {
+        return taulukko[x][y];
     }
     
     

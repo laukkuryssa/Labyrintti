@@ -17,6 +17,9 @@ public class Dijkstra {
     private Solmu[][] path;
     private int kokox;
     private int kokoy;
+    private Solmu alkusolmu;
+    private Solmu maalisolmu;
+    private Taulukko taulukko;
 
     /**
  *
@@ -28,23 +31,24 @@ public class Dijkstra {
  *  @param kokoy on taulukon korkeus.
  */
      
-    public Dijkstra(int x, int y) {
+    public Dijkstra(int x, int y, Taulukko taulukko, int alkux, int alkuy, int loppux, int loppuy) {
+        this.taulukko = taulukko;
         keko = new Minimikeko();
         distance = new int[x][y];
         path = new Solmu[x][y];
         kokox = x;
         kokoy = y;
+        this.alkusolmu = taulukko.getSolmu(alkux, alkuy);
+        this.maalisolmu = taulukko.getSolmu(loppux, loppuy);
     }
     
     /**
  * initialiseSingleSource on Dijkstrassa käytetty alustusoperaatio, jossa
  * distance-taulukkoon asetetaan kaikki etäisyydet äärettömiksi (tässä tarpeeksi)
  * iso luku riittää ja path-taulukkoon kaikkien solmujen arvoksi null.
- * Lopuksi aloitussolmun etäisyydeksi aloitussolmusta asetetaan 0.
- * @param alkusolmu on solmu, josta dijkstra aloittaa.
  */
     
-    public void initialiseSingleSource(int kokox, int kokoy, Solmu alkusolmu) {
+    public void initialiseSingleSource() {
         for (int i = 0; i < kokox; i++) {
             for (int j = 0; j < kokoy; j++) {
                 distance[i][j] = 1000000000;
@@ -73,10 +77,10 @@ public class Dijkstra {
  * Varsinainen Dijkstran suoritus tapahtuu tässä. Tämä metodi on vielä kesken.
  */
     
-    public void suoritaDijkstra(Solmu[][] taulukko, Solmu alkusolmu) {
+    public void suoritaDijkstra() {
         for (int i = 0; i < kokox; i++) {
             for (int j = 0; j < kokoy; j++) {
-                Solmu alkio = taulukko[i][j];
+                Solmu alkio = taulukko.getSolmu(i, j);
                 alkio.setPrioriteetti(distance[i][j]);
                 keko.lisaa(alkio);
             }
@@ -92,6 +96,16 @@ public class Dijkstra {
             }
         }
         
+    }
+    
+    public void lyhinPolku() {
+        maalisolmu.setArvo('R');
+        alkusolmu.setArvo('R');
+        Solmu u = path[maalisolmu.getX()][maalisolmu.getY()];
+        while (u.getX() != alkusolmu.getX() || u.getY() != alkusolmu.getY()) {
+            u.setArvo('R');
+            u = path[u.getX()][u.getY()];
+        }
     }
 
     
