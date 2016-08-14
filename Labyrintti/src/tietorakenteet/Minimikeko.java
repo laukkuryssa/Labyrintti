@@ -65,7 +65,10 @@ public class Minimikeko {
     }
 
     /**
-     * Metodi vaihda vaihtaa kahden solmun paikkaa taulukossa eli keossamme.
+     * Metodi vaihda vaihtaa kahden solmun paikkaa taulukossa eli keossamme. 
+     * Ennen sitä vaihdetaan vielä näiden järjestysnumerot päittäin joten
+     * lopulta kun järjestys numerot vaihtavat sijaintia kaksi kertaa, ne 
+     * pysyvätkin paikallaan ja kaikki muu vaihtuu.
      *
      */
     private void vaihda(Solmu eka, Solmu toka) {
@@ -92,9 +95,9 @@ public class Minimikeko {
      * Metodi lisaa lisää uuden solmun kekoon ja sijoittaa sen oikealle
      * paikalleen. Tarkalleen tämä tapahtuu siten, että ensin tietoa keon koosta
      * muokataan. Sitten taulukkoon lisätään viimeiselle paikalle uusi solmu.
-     * Sen jälkeen vertaillaan vanhempien prioriteetteja juuri lisätyn solmun
-     * prioriteetin kanssa ja niin kauan kuin solmun prioriteetti on vanhemman
-     * prioriteettiä pienempi (= minimikeossa suurempi), se siirtyy ylöspäin
+     * Sen jälkeen vertaillaan vanhempien painoja juuri lisätyn solmun
+     * painon kanssa ja niin kauan kuin solmun paino on vanhemman
+     * painoa pienempi, se siirtyy ylöspäin
      * vaihtaen paikkaa vanhempansa kanssa.
      *
      */
@@ -134,8 +137,8 @@ public class Minimikeko {
      * siirtämi- seen omalle paikalleen keossa. Tarkalleen tämä tapahtuu siten,
      * että ensin tarkastetaan, onko kyseinen solmu lehti. Mikäli on, sitä ei
      * enää voi siirtää alaspäin, joten homma jää siihen. Mikäli solmu ei ole
-     * lehti, katsotaan, onko jomman kumman lapsen prioriteetti pienempi
-     * (minimikeossa suurempi) kuin solmun. Jos ei, solmun ei tarvitse mennä
+     * lehti, katsotaan, onko jomman kumman lapsen paino pienempi
+     * kuin solmun. Jos ei, solmun ei tarvitse mennä
      * alemmas. Mikäli jommalla kummalla lapsella on kovempi priori- teetti,
      * katsotaan, kummalla on kovempi ja solmu vaihtaa tuon lapsen kanssa
      * paikkaa. Sitten kyseistä metodia kutsutaan rekursiivisesti keossa tuon
@@ -162,8 +165,8 @@ public class Minimikeko {
 
     /**
      * Metodi palauttaa keon kärjessä olevan alkion.
-     *
      */
+    
     public Solmu heapMin() {
         return A[1];
     }
@@ -172,10 +175,6 @@ public class Minimikeko {
      * Metodi antaa parametrina annetulle keon alkiolle uuden prioriteettiarvon,
      * mikäli se on kovempi, kuin entinen. Ensin siis tarkistetaan, onko
      * kovempi.
-     *
-     *
-     *
-     *
      */
     public void heapDecKey(Solmu i, int uusiPaino) {
         if (uusiPaino < i.getPaino()) {

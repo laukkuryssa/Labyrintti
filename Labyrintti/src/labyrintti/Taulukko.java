@@ -81,6 +81,10 @@ public class Taulukko {
         }         
     }
     
+    /**
+ * Metodi tulostaa labyrintin.
+ */
+    
     public void tulosta() {
         for (int i = 0; i < kokoy; i++) {
             System.out.println("");

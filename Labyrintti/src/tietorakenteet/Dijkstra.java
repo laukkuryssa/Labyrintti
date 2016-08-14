@@ -15,13 +15,7 @@ public class Dijkstra extends Algoritmi{
     private Minimikeko keko;
     
     /**
- *
  *  @param keko on Minimikeko, jota käytetään apuna Dijkstrassa.
- *  @param distance on taulukko, joka sisältää jokaisen taulukon alkion
- * tämänhetkisen etäisyysarvion lähtösolmusta s.
- *  @param path sisältää solmua edeltävän solmun.
- *  @param kokox on taulukon pituus.
- *  @param kokoy on taulukon korkeus.
  */
      
     public Dijkstra(int x, int y, Taulukko taulukko, int alkux, int alkuy, int loppux, int loppuy) {
@@ -30,14 +24,18 @@ public class Dijkstra extends Algoritmi{
     }
     
     /**
- * Varsinainen Dijkstran suoritus tapahtuu tässä. Tämä metodi on vielä kesken.
+ * Varsinainen Dijkstran suoritus tapahtuu tässä. Kaikki taulukon solmut käydään
+ * aluksi läpi ja ne lisätään kekoon. Kekoon jää päällimmäiseksi alkusolmu, jonka
+ * paino on alustettu nollaksi. Sitten keosta poistetaan alkioita ja aina
+ * haetaan poistetun alkion vierussolmut ja relaxoidaan poistetun solmun ja
+ * sen naapurisolmujen etäisyys. Samalla päivitetään naapurisolmujen (jotka siis
+ * vielä ovat keossa) paikka keossa.
  */
     
     public void suoritaDijkstra() {
         for (int i = 0; i < kokox; i++) {
             for (int j = 0; j < kokoy; j++) {
                 Solmu alkio = taulukko.getSolmu(i, j);
-                alkio.setPaino(distance[i][j]);
                 keko.lisaa(alkio);
             }
         }
@@ -47,7 +45,7 @@ public class Dijkstra extends Algoritmi{
                 Solmu v = u.getVieruslista()[i];
                 if (v!=null) {
                     relax(u, v);
-                    keko.heapDecKey(v, distance[v.getX()][v.getY()]);
+                    keko.heapDecKey(v, v.getPaino());
                 }
             }
         }

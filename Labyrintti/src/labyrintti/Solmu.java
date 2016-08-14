@@ -1,8 +1,11 @@
 /*
  * Tämä on alkio, joista sekä labyrintti että keko koostuvat. Siksi Solmu-
-luokassa on kekoa varten prioriteettiarvo, x- ja y-arvot sijainnille taulukossa,
-parametri arvo on taas labyrintin tulostuksessa käytettävä arvo, painoa käytetään
-dijkstrassa, boolean kertoo solmun merkityksen labyrintissä ja vieruslista on
+luokassa on kekoa varten jnro, joka kertoo Solmun paikkanumeron kekotaulukossa
+ja toisaalta paino (etäisyysarvio lähtösolmuun), path (naapuri, jonka kautta
+kulkee lyhin matka lähtösolmuun).
+Solmulla on myös x- ja y-arvot sijainnille taulukossa,
+parametri arvo on taas labyrintin tulostuksessa käytettävä arvo, 
+boolean kertoo pääseekö kyseiseen kohtaan ja vieruslista on
 4-paikkainen taulukko, jossa on solmun naapurisolmut.
  */
 package labyrintti;
@@ -13,10 +16,12 @@ public class Solmu {
     private char arvo;
     private boolean paasy;
     private int paino;
+    private Solmu path;
     private int jnro;
     private Solmu[] vieruslista;
 
     public Solmu(int x, int y) {
+        this.path = null;
         this.x = x;
         this.jnro = 1;
         this.y = y;
@@ -28,6 +33,10 @@ public class Solmu {
             vieruslista[i] = null;
         }
     }
+    
+    /**
+ * Tämä on apumetodi, jota haeNaapurit-metodi käyttää.
+ */
     
     public void muokkaaVieruslistaa(Solmu s, int paikka) {
         this.vieruslista[paikka] = s;
@@ -73,6 +82,14 @@ public class Solmu {
         this.vieruslista = vieruslista;
     }
 
+    public Solmu getPath() {
+        return path;
+    }
+
+    public void setPath(Solmu path) {
+        this.path = path;
+    }
+    
     public int getX() {
         return x;
     }

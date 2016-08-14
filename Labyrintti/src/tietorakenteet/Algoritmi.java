@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Tämä luokka sisältää Dijkstran ja Bellman-Fordin apumetodit sekä yhteiset
+muuttujat.
  */
 package tietorakenteet;
 
@@ -9,13 +8,15 @@ import labyrintti.Solmu;
 import labyrintti.Taulukko;
 
 /**
- *
- * @author timohaut
+ *  @param alkusolmu on alkusolmu, jonka parametrit syötetään luodessa
+ *  algoritmi.
+ *  @param maalisolmu on maalisolmu, jonka parametrit syötetään luodessa
+ *  algoritmi.
+ *  @param kokox on taulukon pituus.
+ *  @param kokoy on taulukon korkeus.
+ *  @param taulukko on labyrintti.
  */
 public class Algoritmi {
-    
-    protected int[][] distance;
-    protected Solmu[][] path;
     protected int kokox;
     protected int kokoy;
     protected Solmu alkusolmu;
@@ -34,8 +35,6 @@ public class Algoritmi {
      
     public Algoritmi(int x, int y, Taulukko taulukko, int alkux, int alkuy, int loppux, int loppuy) {
         this.taulukko = taulukko;
-        distance = new int[x][y];
-        path = new Solmu[x][y];
         kokox = x;
         kokoy = y;
         this.alkusolmu = taulukko.getSolmu(alkux, alkuy);
@@ -44,43 +43,49 @@ public class Algoritmi {
     
     /**
  * initialiseSingleSource on Dijkstrassa käytetty alustusoperaatio, jossa
- * distance-taulukkoon asetetaan kaikki etäisyydet äärettömiksi (tässä tarpeeksi)
- * iso luku riittää ja path-taulukkoon kaikkien solmujen arvoksi null.
+ * kaikkien solmujen painot asetetaan äärettömiksi (tässä tarpeeksi)
+ * iso luku riittää ja path-solmuiksi null, sillä ne löytyvät haun myötä.
  */
     
     public void initialiseSingleSource() {
         for (int i = 0; i < kokox; i++) {
             for (int j = 0; j < kokoy; j++) {
-                distance[i][j] = 1000000000;
-                path[i][j] = null;
+                taulukko.getSolmu(i,j).setPaino(1000000000);
             }
         }
-        distance[alkusolmu.getX()][alkusolmu.getY()]=0;
+        alkusolmu.setPaino(0);
     }
     
     /**
  * Relaxointi on operaatio, jossa metodi saa parametrina solmut u ja v ja metodi
  * vertaa, onko lähtösolmusta u:hen ja siitä v:hen lyhyempi matka kuin tämän-
  * hetkinen tiedossa oleva matka suoraan lähtösolmusta v:hen. Mikäli näin
- * on, distance-taulukkoon muutetaan v:n arvoksi edellämainitun summan pituus
- * ja path-taulukkoon v:n arvoksi u.
+ * on, solmun painoksi muutetaan  muutetaan summan
+ * ja v:n path-solmuksi u.
  */
     
     public void relax(Solmu u, Solmu v) {
-        if (distance[v.getX()][v.getY()] > distance[u.getX()][u.getY()] + v.getPaino()) {
-            distance[v.getX()][v.getY()] = distance[u.getX()][u.getY()] + v.getPaino();
-            path[v.getX()][v.getY()] = u;
+        if (v.getPaino() > u.getPaino() + 1) {
+            v.setPaino(u.getPaino() + 1);
+            v.setPath(u);
         }
     }
     
+    /**
+ * Lyhin polku on linkitetty lista maalisolmusta lähtösolmuun, joka on
+ * muodostunut relaxointien yhteydessä. Liikkeelle lähdetään maalisolmusta
+ * ja edetään siitä aina eteenpäin kohti lähtösolmua path-solmun avulla.
+ * Samalla muokataan solmujen kirjain-arvoa R (reitti), jolloin polku näkyy
+ * tulostuksessa R-kirjaimista muodostuvana jonona.
+ */
     
     public void lyhinPolku() {
         maalisolmu.setArvo('R');
         alkusolmu.setArvo('R');
-        Solmu u = path[maalisolmu.getX()][maalisolmu.getY()];
+        Solmu u = maalisolmu.getPath();
         while (u.getX() != alkusolmu.getX() || u.getY() != alkusolmu.getY()) {
             u.setArvo('R');
-            u = path[u.getX()][u.getY()];
+            u = u.getPath();
         }
     }
 
