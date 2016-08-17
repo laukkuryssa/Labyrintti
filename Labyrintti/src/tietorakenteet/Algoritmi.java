@@ -26,11 +26,12 @@ public class Algoritmi {
     /**
  *
  *  @param keko on Minimikeko, jota käytetään apuna Dijkstrassa.
- *  @param distance on taulukko, joka sisältää jokaisen taulukon alkion
- * tämänhetkisen etäisyysarvion lähtösolmusta s.
- *  @param path sisältää solmua edeltävän solmun.
  *  @param kokox on taulukon pituus.
  *  @param kokoy on taulukon korkeus.
+ *  @param alkux on alkupisteen x-koordinaatti
+ *  @param alkuy on alkupisteen y-koordinaatti
+ *  @param loppux on loppupisteen x-koordinaatti
+ *  @param loppuy on loppupisteen y-koordinaatti
  */
      
     public Algoritmi(int x, int y, Taulukko taulukko, int alkux, int alkuy, int loppux, int loppuy) {
