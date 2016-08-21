@@ -58,7 +58,7 @@ public class TaulukkoTest {
     
     @Test
     public void haeNaapuritToimii() {
-        taulukko3x3.luoTaulukko(0.12);
+        taulukko3x3.luoTaulukko(0);
         taulukko3x3.haeNaapurit(taulukko3x3.getTaulukko()[0][2]);
         assertEquals(null, taulukko3x3.getTaulukko()[0][2].getVieruslista()[0]);
         assertEquals(taulukko3x3.getTaulukko()[0][1], taulukko3x3.getTaulukko()[0][2].getVieruslista()[1]);
