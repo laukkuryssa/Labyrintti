@@ -85,14 +85,15 @@ public class Taulukko {
  * Metodi tulostaa labyrintin.
  */
     
-    public void tulosta() {
+    public String toString() {
+        String tulostus = "";
         for (int i = 0; i < kokoy; i++) {
-            System.out.println("");
+            tulostus += "\n";
             for (int j = 0; j < kokox; j++) {
-                System.out.print(taulukko[j][i].getArvo());
+                tulostus += taulukko[j][i].getArvo();
             }
         }
-        System.out.println("");
+        return tulostus;
     }
 
     public Solmu[][] getTaulukko() {
