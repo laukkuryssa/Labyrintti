@@ -22,8 +22,8 @@ public class Labyrintti {
         labyrintti.luoTaulukko(0);
         labyrintti.getSolmu(2, 1).setPaasy(false);
         labyrintti.getSolmu(2, 1).setArvo('E');
-        labyrintti.getSolmu(1, 1).setPaasy(false);
-        labyrintti.getSolmu(1, 1).setArvo('E');
+//        labyrintti.getSolmu(1, 1).setPaasy(false);
+//        labyrintti.getSolmu(1, 1).setArvo('E');
         labyrintti.getSolmu(0, 1).setPaasy(false);
         labyrintti.getSolmu(0, 1).setArvo('E');
 
@@ -35,7 +35,7 @@ public class Labyrintti {
         }
 
         labyrintti.tulosta();
-        BellmanFord hakija = new BellmanFord(5, 5, labyrintti, 0, 0, 2, 3);
+        BellmanFord hakija = new BellmanFord(5, 5, labyrintti, 0, 0, 2, 4);
         hakija.suoritaBellmanFord();
         hakija.lyhinPolku();
         labyrintti.tulosta();
