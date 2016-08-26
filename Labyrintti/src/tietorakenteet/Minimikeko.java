@@ -65,19 +65,19 @@ public class Minimikeko {
     }
 
     /**
-     * Metodi vaihda vaihtaa kahden solmun paikkaa taulukossa eli keossamme. 
+     * Metodi vaihda vaihtaa kahden solmun paikkaa taulukossa eli keossamme.
      * Ennen sitä vaihdetaan vielä näiden järjestysnumerot päittäin joten
-     * lopulta kun järjestys numerot vaihtavat sijaintia kaksi kertaa, ne 
+     * lopulta kun järjestys numerot vaihtavat sijaintia kaksi kertaa, ne
      * pysyvätkin paikallaan ja kaikki muu vaihtuu.
      *
      */
     private void vaihda(Solmu eka, Solmu toka) {
-        Solmu muisti = eka;
-        int jnro = eka.getJnro();
-        eka.setJnro(toka.getJnro());
-        toka.setJnro(jnro);
-        A[eka.getJnro()] = toka;
-        A[toka.getJnro()] = muisti;
+        int jnroeka = eka.getJnro();
+        int jnrotoka = toka.getJnro();
+        eka.setJnro(jnrotoka);
+        toka.setJnro(jnroeka);
+        A[jnroeka] = toka;
+        A[jnrotoka] = eka;
     }
 
     /**
@@ -85,29 +85,27 @@ public class Minimikeko {
      *
      */
     public boolean onkoLehti(Solmu i) {
-        if (i.getJnro() > koko / 2) {
-            return true;
-        }
-        return false;
+        return (i.getJnro() <= koko / 2);
     }
 
     /**
      * Metodi lisaa lisää uuden solmun kekoon ja sijoittaa sen oikealle
      * paikalleen. Tarkalleen tämä tapahtuu siten, että ensin tietoa keon koosta
      * muokataan. Sitten taulukkoon lisätään viimeiselle paikalle uusi solmu.
-     * Sen jälkeen vertaillaan vanhempien painoja juuri lisätyn solmun
-     * painon kanssa ja niin kauan kuin solmun paino on vanhemman
-     * painoa pienempi, se siirtyy ylöspäin
-     * vaihtaen paikkaa vanhempansa kanssa.
+     * Sen jälkeen vertaillaan vanhempien painoja juuri lisätyn solmun painon
+     * kanssa ja niin kauan kuin solmun paino on vanhemman painoa pienempi, se
+     * siirtyy ylöspäin vaihtaen paikkaa vanhempansa kanssa.
      *
      */
     public void lisaa(Solmu alkio) {
 
         A[++koko] = alkio;
         alkio.setJnro(koko);
-        A[koko] = alkio;
         if (alkio.getJnro() != 1) {
             while (alkio.getJnro() != 1 && vanhempi(alkio).getPaino() > alkio.getPaino()) {
+                if (vanhempi(alkio).getJnro() == 1) {
+                    System.out.println("HÄLYTYS" + alkio.getX() + " " + alkio.getY());
+                }
                 vaihda(vanhempi(alkio), alkio);
             }
         }
@@ -126,7 +124,11 @@ public class Minimikeko {
      */
     public Solmu poppaa() {
         Solmu popattava = A[1];
-        A[1] = A[koko--];
+        Solmu viimeinen = A[koko];
+        koko--;
+        viimeinen.setJnro(1);
+        A[1] = viimeinen;
+
         heapify(A[1]);
         return popattava;
     }
@@ -137,36 +139,42 @@ public class Minimikeko {
      * siirtämi- seen omalle paikalleen keossa. Tarkalleen tämä tapahtuu siten,
      * että ensin tarkastetaan, onko kyseinen solmu lehti. Mikäli on, sitä ei
      * enää voi siirtää alaspäin, joten homma jää siihen. Mikäli solmu ei ole
-     * lehti, katsotaan, onko jomman kumman lapsen paino pienempi
-     * kuin solmun. Jos ei, solmun ei tarvitse mennä
-     * alemmas. Mikäli jommalla kummalla lapsella on kovempi priori- teetti,
-     * katsotaan, kummalla on kovempi ja solmu vaihtaa tuon lapsen kanssa
-     * paikkaa. Sitten kyseistä metodia kutsutaan rekursiivisesti keossa tuon
-     * lapsen entisellä ja itse solmun nykyisellä paikalla olevalle solmulle eli
-     * solmulle itselleen, jolloin solmu pääsee taas etenemään alemmas, mikäli
-     * kekoehto niin vaatii.
+     * lehti, katsotaan, onko jomman kumman lapsen paino pienempi kuin solmun.
+     * Jos ei, solmun ei tarvitse mennä alemmas. Mikäli jommalla kummalla
+     * lapsella on kovempi priori- teetti, katsotaan, kummalla on kovempi ja
+     * solmu vaihtaa tuon lapsen kanssa paikkaa. Sitten kyseistä metodia
+     * kutsutaan rekursiivisesti keossa tuon lapsen entisellä ja itse solmun
+     * nykyisellä paikalla olevalle solmulle eli solmulle itselleen, jolloin
+     * solmu pääsee taas etenemään alemmas, mikäli kekoehto niin vaatii.
      *
      */
     public void heapify(Solmu i) {
         if (onkoLehti(i)) {
             return;
         }
-
-        if (i.getPaino() > vasen(i).getPaino() || i.getPaino() > oikea(i).getPaino()) {
-            if (vasen(i).getPaino() < oikea(i).getPaino()) {
-                vaihda(i, vasen(i));
-                heapify(vasen(i));
-            } else {
-                vaihda(i, oikea(i));
-                heapify(oikea(i));
+        if (vasen(i) != null && oikea(i) != null) {
+            if (i.getPaino() > vasen(i).getPaino() || i.getPaino() > oikea(i).getPaino()) {
+                if (vasen(i).getPaino() < oikea(i).getPaino()) {
+                    vaihda(i, vasen(i));
+                    heapify(vasen(i));
+                } else {
+                    vaihda(i, oikea(i));
+                    heapify(oikea(i));
+                }
             }
+        } else if (vasen(i) != null && i.getPaino() > vasen(i).getPaino()) {
+            vaihda(i, vasen(i));
+            heapify(vasen(i));
+        } else if (oikea(i) != null && i.getPaino() > oikea(i).getPaino()) {
+            vaihda(i, oikea(i));
+            heapify(oikea(i));
         }
+
     }
 
     /**
      * Metodi palauttaa keon kärjessä olevan alkion.
      */
-    
     public Solmu heapMin() {
         return A[1];
     }
@@ -179,11 +187,8 @@ public class Minimikeko {
     public void heapDecKey(Solmu i, int uusiPaino) {
         if (uusiPaino < i.getPaino()) {
             i.setPaino(uusiPaino);
-            while (i.getPaino() > 1 && vanhempi(i).getPaino() > i.getPaino()) {
-                vaihda(i, vanhempi(i));
-                i = vanhempi(i);
-            }
+            heapify(i);
         }
-    }
 
+    }
 }

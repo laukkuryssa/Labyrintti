@@ -69,7 +69,7 @@ public class Algoritmi {
         if (v.getPaino() > u.getPaino() + 1) {
             v.setPaino(u.getPaino() + 1);
             v.setPath(u);
-        }
+        } 
     }
     
     /**

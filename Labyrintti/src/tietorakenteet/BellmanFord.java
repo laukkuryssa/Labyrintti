@@ -17,24 +17,29 @@ public class BellmanFord extends Algoritmi {
     }
 
     /**
- *
- * Metodi suorittaa Bellman-Ford -algoritmin annetuilla syötteillä. Taulukon
- * jokainen alkio käydään läpi for-loopilla ja jokaisen kohdalla haetaan
- * naapurit ja näiden välinen yhteys relaxoidaan.
- */
-    
+     *
+     * Metodi suorittaa Bellman-Ford -algoritmin annetuilla syötteillä. Taulukon
+     * jokainen alkio käydään läpi for-loopilla ja jokaisen kohdalla haetaan
+     * naapurit ja näiden välinen yhteys relaxoidaan.
+     */
     public void suoritaBellmanFord() {
         initialiseSingleSource();
+        for (int a = 0; a < kokox*kokoy; a++) {
+            
+        
         for (int j = 0; j < kokoy; j++) {
             for (int i = 0; i < kokox; i++) {
                 Solmu alkio = taulukko.getSolmu(i, j);
-                for (int k = 0; k < 4; k++) {
-                    Solmu v = alkio.getVieruslista()[k];
-                    if (v != null) {
-                        relax(alkio, v);
+                if (alkio.isPaasy() == true) {
+                    for (int k = 0; k < 4; k++) {
+                        Solmu v = alkio.getVieruslista()[k];
+                        if (v != null) {
+                            relax(alkio, v);
+                        }
                     }
                 }
             }
+        }
         }
     }
 
