@@ -21,7 +21,7 @@ public class Labyrintti {
     public static void main(String[] args) {
         while (true) {
                         Taulukko labyrintti = new Taulukko(20, 20);
-                        labyrintti.luoTaulukko(0);
+                        labyrintti.luoTaulukko(0.30);
                         for (int i = 0; i < labyrintti.getKokox(); i++) {
                             for (int j = 0; j < labyrintti.getKokoy(); j++) {
                                 labyrintti.haeNaapurit(labyrintti.getSolmu(i, j));
