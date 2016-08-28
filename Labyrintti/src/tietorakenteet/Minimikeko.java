@@ -131,10 +131,10 @@ public class Minimikeko {
     public Solmu poppaa() {
         Solmu popattava = A[1];
         Solmu viimeinen = A[koko];
+        A[koko] = null;
         koko--;
         viimeinen.setJnro(1);
         A[1] = viimeinen;
-        A[koko+1] = null;
         heapify(A[1]);
         return popattava;
     }
