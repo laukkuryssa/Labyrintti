@@ -185,7 +185,7 @@ public class Minimikeko {
      * kovempi.
      */
     public void heapDecKey(Solmu i) {
-        while (i.getJnro() != 1 && i.getArvo() < vanhempi(i).getArvo()) {
+        while (i.getJnro() != 1 && i.getPaino() < vanhempi(i).getPaino()) {
             vaihda(i, vanhempi(i));
         }
     }

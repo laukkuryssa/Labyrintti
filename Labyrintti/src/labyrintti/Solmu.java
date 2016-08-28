@@ -19,6 +19,7 @@ public class Solmu {
     private Solmu path;
     private int jnro;
     private Solmu[] vieruslista;
+    private boolean kayty;
 
     public Solmu(int x, int y) {
         this.path = null;
@@ -28,6 +29,7 @@ public class Solmu {
         this.arvo = 'P';
         this.paasy = true;
         this.paino = 1;
+        this.kayty = false;
         vieruslista = new Solmu[4];
         for (int i = 0; i < 4; i++) {
             vieruslista[i] = null;
@@ -61,11 +63,20 @@ public class Solmu {
     public int getPaino() {
         return paino;
     }
-
+    
     public void setPaino(int paino) {
         this.paino = paino;
     }
+    
+    public void setKayty() {
+        this.kayty = true;
+    }
+    
+    public boolean getKayty() {
+        return kayty;
+    }
 
+    
     public boolean isPaasy() {
         return paasy;
     }

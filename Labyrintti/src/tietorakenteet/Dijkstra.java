@@ -45,14 +45,16 @@ public class Dijkstra extends Algoritmi {
         }
         while (keko.getKoko() > 0) {
             Solmu u = keko.poppaa();
-            S[s] = u;
-            s++;
-            System.out.println(u.getX() + " " + u.getY());
-            for (int i = 0; i < 4; i++) {
-                Solmu v = u.getVieruslista()[i];
-                if (v != null) {
-                    relax(u, v);
-                    keko.heapDecKey(v);                                   
+            if (!u.getKayty()) {
+                u.setKayty();
+                S[s] = u;
+                s++;
+                for (int i = 0; i < 4; i++) {
+                    Solmu v = u.getVieruslista()[i];
+                    if (v != null) {
+                        relax(u, v);
+                        keko.heapDecKey(v);
+                    }
                 }
             }
         }
