@@ -18,7 +18,7 @@ public class Minimikeko {
     private int koko;
 
     public Minimikeko() {
-        A = new Solmu[100000];
+        A = new Solmu[1000000];
         koko = 0;
     }
 

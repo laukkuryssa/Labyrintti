@@ -38,31 +38,41 @@ public class Kayttoliittyma {
                 System.out.println("Haluatko verrata Dijkstraa ja Bellman-Fordia? (k/e)");
                 String vertailuhalu = lukija.nextLine();
                 if (!vertailuhalu.equals("k") && !vertailuhalu.equals("e")) {
+                    System.out.println("Syötä k tai e.");
+                    vertailuhalu = lukija.nextLine();
+                }
+                if (vertailuhalu.equals("e")) {
+                    System.out.println("Haluatko suorittaa Dijkstraa monta kertaa? (k/e)");
+                    String dijkstrahalu = lukija.nextLine();
+                    if (!dijkstrahalu.equals("k") && !dijkstrahalu.equals("e")) {
                         System.out.println("Syötä k tai e.");
                         vertailuhalu = lukija.nextLine();
+                    } else if (dijkstrahalu.equals("k")) {
+                        dka(x, y, tn, lx, ly, mx, my);
+                    } else {
+                        System.out.println("Jos haluat suorittaa reitinhaun Bellman-Fordilla,\n syötä b ja jos Dijkstralla, syötä d.");
+                        String algoritmi = lukija.nextLine();
+                        System.out.println("Tulostetaanko labyrintti? (k/e)");
+                        String tulostus = lukija.nextLine();
+                        if (!tulostus.equals("k") && !tulostus.equals("e")) {
+                            System.out.println("Syötä k tai e.");
+                            tulostus = lukija.nextLine();
+                        }
+                        while (!algoritmi.equals("b") && !algoritmi.equals("d")) {
+                            System.out.println("Syötä b tai d.");
+                            algoritmi = lukija.nextLine();
+                        }
+                        if (algoritmi.equals("d")) {
+                            d(x, y, tn, lx, ly, mx, my, tulostus);
+                            kysyUusinta(x, y, tn, lx, ly, mx, my, tulostus);
+                        } else if (algoritmi.equals("b")) {
+                            b(x, y, tn, lx, ly, mx, my, tulostus);
+                            kysyUusinta(x, y, tn, lx, ly, mx, my, tulostus);
+                        }
                     }
-                if (vertailuhalu.equals("e")) {
-                    System.out.println("Jos haluat suorittaa reitinhaun Bellman-Fordilla,\n syötä b ja jos Dijkstralla, syötä d.");
-                    String algoritmi = lukija.nextLine();
-                    System.out.println("Tulostetaanko labyrintti? (k/e)");
-                    String tulostus = lukija.nextLine();
-                    if (!tulostus.equals("k") && !tulostus.equals("e")) {
-                        System.out.println("Syötä k tai e.");
-                        tulostus = lukija.nextLine();
+                    if (vertailuhalu.equals("k")) {
+                        vertaa(x, y, tn, lx, ly, mx, my);
                     }
-                    while (!algoritmi.equals("b") && !algoritmi.equals("d")) {
-                        System.out.println("Syötä b tai d.");
-                        algoritmi = lukija.nextLine();
-                    }
-                    if (algoritmi.equals("d")) {
-                        d(x, y, tn, lx, ly, mx, my, tulostus);
-                        kysyUusinta(x, y, tn, lx, ly, mx, my, tulostus);
-                    } else if (algoritmi.equals("b")) {
-                        b(x, y, tn, lx, ly, mx, my, tulostus);
-                        kysyUusinta(x, y, tn, lx, ly, mx, my, tulostus);
-                    }
-                } if (vertailuhalu.equals("k")) {
-                    vertaa(x, y, tn, lx, ly, mx, my);
                 }
             } else if (numero.equals("2")) {
                 System.out.println("Näkemiin.");
@@ -180,7 +190,7 @@ public class Kayttoliittyma {
     }
 
     public void vertaa(int x, int y, double tn, int lx, int ly, int mx, int my) {
-        System.out.println("Montako toista tehdään? (1-1000)");
+        System.out.println("Montako toistoa tehdään? (1-1000)");
         int kerrat = kysyKokonaisluku(1, 1000);
         long aikaBellman = 0;
         long aikaDijkstra = 0;
@@ -192,6 +202,17 @@ public class Kayttoliittyma {
         aikaDijkstra = aikaDijkstra / kerrat;
 
         System.out.println("\nBellman-Fordin keskiarvo: " + aikaBellman + " ms.");
+        System.out.println("Dijkstran keskiarvo: " + aikaDijkstra + " ms.");
+    }
+
+    public void dka(int x, int y, double tn, int lx, int ly, int mx, int my) {
+        System.out.println("Montako toistoa tehdään? (1-10000)");
+        int kerrat = kysyKokonaisluku(1, 10000);
+        long aikaDijkstra = 0;
+        for (int i = 0; i < kerrat; i++) {
+            aikaDijkstra += d(x, y, tn, lx, ly, mx, my, "e");
+        }
+        aikaDijkstra = aikaDijkstra / kerrat;
         System.out.println("Dijkstran keskiarvo: " + aikaDijkstra + " ms.");
     }
 
