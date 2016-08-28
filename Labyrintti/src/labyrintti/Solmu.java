@@ -100,7 +100,7 @@ public class Solmu {
     public void setPath(Solmu path) {
         this.path = path;
         
-        System.out.println(this.x + " - " + this.y + "->" + path.getX() + " - " + path.getY());
+//        System.out.println(this.x + " - " + this.y + "->" + path.getX() + " - " + path.getY());
     }
     
     public int getX() {

@@ -48,6 +48,9 @@ public class Minimikeko {
      *
      */
     public Solmu vasen(Solmu alkio) {
+        if (onkoLehti(alkio)) {
+            return null;
+        }
         return A[alkio.getJnro() * 2];
     }
 
@@ -61,6 +64,9 @@ public class Minimikeko {
      *
      */
     public Solmu oikea(Solmu alkio) {
+        if (onkoLehti(alkio)) {
+            return null;
+        }
         return A[alkio.getJnro() * 2 + 1];
     }
 
@@ -156,18 +162,18 @@ public class Minimikeko {
             if (i.getPaino() > vasen(i).getPaino() || i.getPaino() > oikea(i).getPaino()) {
                 if (vasen(i).getPaino() < oikea(i).getPaino()) {
                     vaihda(i, vasen(i));
-                    heapify(vasen(i));
+                    heapify(i);
                 } else {
                     vaihda(i, oikea(i));
-                    heapify(oikea(i));
+                    heapify(i);
                 }
             }
         } else if (vasen(i) != null && i.getPaino() > vasen(i).getPaino()) {
             vaihda(i, vasen(i));
-            heapify(vasen(i));
+            heapify(i);
         } else if (oikea(i) != null && i.getPaino() > oikea(i).getPaino()) {
             vaihda(i, oikea(i));
-            heapify(oikea(i));
+            heapify(i);
         }
 
     }
