@@ -45,13 +45,13 @@ public class TaulukkoTest {
        taulukko3x3.luoTaulukko(0);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                assertEquals('P', taulukko3x3.getTaulukko()[i][j].getArvo());
+                assertEquals(' ', taulukko3x3.getTaulukko()[i][j].getArvo());
             }
         }
        taulukko3x3.luoTaulukko(1);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                assertEquals('E', taulukko3x3.getTaulukko()[i][j].getArvo());
+                assertEquals('█', taulukko3x3.getTaulukko()[i][j].getArvo());
             }
         } 
     }

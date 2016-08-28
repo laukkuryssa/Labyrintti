@@ -51,10 +51,16 @@ public class MinimikekoTest {
         keko.lisaa(solmu1);
         keko.lisaa(solmu2);
         keko.lisaa(solmu3);
-        Solmu poppi1 = keko.poppaa();
-        assertEquals(1, poppi1.getJnro());
-        assertEquals(3, poppi1.getX());
+        Solmu poppi = keko.poppaa();
+        assertEquals(1, poppi.getJnro());
+        assertEquals(3, poppi.getX());
+        poppi = keko.poppaa();
+        assertEquals(1, poppi.getJnro());
+        assertEquals(1, poppi.getX());
+        poppi = keko.poppaa();
+        assertEquals(1, poppi.getJnro());
+        assertEquals(2, poppi.getX());
         
-
+        
      }
 }

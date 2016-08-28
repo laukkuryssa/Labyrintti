@@ -35,63 +35,43 @@ public class Kayttoliittyma {
                 int mx = kysyKokonaisluku(1, x);
                 System.out.println("Anna maalipisteen y-korodinaatti (1 - taulukon korkeus)");
                 int my = kysyKokonaisluku(1, y);
-                
-                System.out.println("Jos haluat suorittaa reitinhaun Bellman-Fordilla,\n syötä b ja jos Dijkstralla, syötä d.");
-                String algoritmi = lukija.nextLine();
-                while (!algoritmi.equals("b") && !algoritmi.equals("d")) {
-                    System.out.println("Syötä b tai d.");
-                    algoritmi = lukija.nextLine();
+                System.out.println("Haluatko verrata Dijkstraa ja Bellman-Fordia? (k/e)");
+                String vertailuhalu = lukija.nextLine();
+                if (!vertailuhalu.equals("k") && !vertailuhalu.equals("e")) {
+                        System.out.println("Syötä k tai e.");
+                        vertailuhalu = lukija.nextLine();
+                    }
+                if (vertailuhalu.equals("e")) {
+                    System.out.println("Jos haluat suorittaa reitinhaun Bellman-Fordilla,\n syötä b ja jos Dijkstralla, syötä d.");
+                    String algoritmi = lukija.nextLine();
+                    System.out.println("Tulostetaanko labyrintti? (k/e)");
+                    String tulostus = lukija.nextLine();
+                    if (!tulostus.equals("k") && !tulostus.equals("e")) {
+                        System.out.println("Syötä k tai e.");
+                        tulostus = lukija.nextLine();
+                    }
+                    while (!algoritmi.equals("b") && !algoritmi.equals("d")) {
+                        System.out.println("Syötä b tai d.");
+                        algoritmi = lukija.nextLine();
+                    }
+                    if (algoritmi.equals("d")) {
+                        d(x, y, tn, lx, ly, mx, my, tulostus);
+                        kysyUusinta(x, y, tn, lx, ly, mx, my, tulostus);
+                    } else if (algoritmi.equals("b")) {
+                        b(x, y, tn, lx, ly, mx, my, tulostus);
+                        kysyUusinta(x, y, tn, lx, ly, mx, my, tulostus);
+                    }
+                } if (vertailuhalu.equals("k")) {
+                    vertaa(x, y, tn, lx, ly, mx, my);
                 }
-                if (algoritmi.equals("d")) {
-                    while (true) {
-                        Taulukko labyrintti = new Taulukko(x, y);
-                        labyrintti.luoTaulukko(tn);
-                        for (int i = 0; i < labyrintti.getKokox(); i++) {
-                            for (int j = 0; j < labyrintti.getKokoy(); j++) {
-                                labyrintti.haeNaapurit(labyrintti.getSolmu(i, j));
-                            }
-                        }
-                        try {
-                            String s = labyrintti.toString();
-                            Dijkstra hakija = new Dijkstra(x, y, labyrintti, lx-1, ly-1, mx-1, my-1);
-                            hakija.suoritaDijkstra();
-                            hakija.lyhinPolku();
-                            System.out.println(s);
-                            System.out.println(labyrintti.toString());
-                            break;
-                        } catch (NullPointerException exception) {
-                        }
-                    }
-                } else if (algoritmi.equals("b")) {
-                    while (true) {
-                        Taulukko labyrintti = new Taulukko(x, y);
-                        labyrintti.luoTaulukko(tn);
-                        for (int i = 0; i < labyrintti.getKokox(); i++) {
-                            for (int j = 0; j < labyrintti.getKokoy(); j++) {
-                                labyrintti.haeNaapurit(labyrintti.getSolmu(i, j));
-                            }
-                        }
-                        try {
-                            String s = labyrintti.toString();
-                            BellmanFord hakija = new BellmanFord(x, y, labyrintti, lx-1, ly-1, mx-1, my-1);
-                            hakija.suoritaBellmanFord();
-                            hakija.lyhinPolku();
-                            System.out.println(s);
-                            System.out.println(labyrintti.toString());
-                            break;
-                        } catch (NullPointerException exception) {
-                        }
-                    }
-                }            
             } else if (numero.equals("2")) {
                 System.out.println("Näkemiin.");
                 break;
             } else {
                 System.out.println("Syötä 1 tai 2.");
             }
+        }
     }
-}
-
 
     public double kysyLuku(double a, double b) {
         while (true) {
@@ -125,4 +105,94 @@ public class Kayttoliittyma {
             }
         }
     }
+
+    public long d(int x, int y, double tn, int lx, int ly, int mx, int my, String tulostus) {
+        long aikaAlussa = 0;
+        long aikaLopussa = 0;
+        while (true) {
+            Taulukko labyrintti = new Taulukko(x, y);
+            labyrintti.luoTaulukko(tn);
+            for (int i = 0; i < labyrintti.getKokox(); i++) {
+                for (int j = 0; j < labyrintti.getKokoy(); j++) {
+                    labyrintti.haeNaapurit(labyrintti.getSolmu(i, j));
+                }
+            }
+            try {
+                String s = labyrintti.toString();
+                Dijkstra hakija = new Dijkstra(x, y, labyrintti, lx - 1, ly - 1, mx - 1, my - 1);
+                aikaAlussa = System.currentTimeMillis();
+                hakija.suoritaDijkstra();
+                hakija.lyhinPolku();
+                aikaLopussa = System.currentTimeMillis();
+                if (tulostus.equals("k")) {
+                    System.out.println(s);
+                    System.out.println(labyrintti.toString());
+                }
+                System.out.println("Operaatioon kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+                return aikaLopussa - aikaAlussa;
+            } catch (NullPointerException exception) {
+            }
+        }
+    }
+
+    public long b(int x, int y, double tn, int lx, int ly, int mx, int my, String tulostus) {
+        long aikaAlussa = 0;
+        long aikaLopussa = 0;
+        while (true) {
+            Taulukko labyrintti = new Taulukko(x, y);
+            labyrintti.luoTaulukko(tn);
+            for (int i = 0; i < labyrintti.getKokox(); i++) {
+                for (int j = 0; j < labyrintti.getKokoy(); j++) {
+                    labyrintti.haeNaapurit(labyrintti.getSolmu(i, j));
+                }
+            }
+            try {
+                String s = labyrintti.toString();
+                BellmanFord hakija = new BellmanFord(x, y, labyrintti, lx - 1, ly - 1, mx - 1, my - 1);
+                aikaAlussa = System.currentTimeMillis();
+                hakija.suoritaBellmanFord();
+                hakija.lyhinPolku();
+                aikaLopussa = System.currentTimeMillis();
+                if (tulostus.equals("k")) {
+                    System.out.println(s);
+                    System.out.println(labyrintti.toString());
+                }
+                System.out.println("Operaatioon kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+                return aikaLopussa - aikaAlussa;
+            } catch (NullPointerException exception) {
+            }
+        }
+    }
+
+    public void kysyUusinta(int x, int y, double tn, int lx, int ly, int mx, int my, String tulostus) {
+        System.out.println("Jos haluat uuden haun samoilla hakuehdoilla, \n"
+                + "syötä d (Dijkstra) tai b (Bellman-Ford). Mikäli haluat \n"
+                + "lopettaa, syötä jotain muuta.");
+        String syote = lukija.nextLine();
+        if (syote.equals("d")) {
+            d(x, y, tn, lx, ly, mx, my, tulostus);
+            kysyUusinta(x, y, tn, lx, ly, mx, my, tulostus);
+        }
+        if (syote.equals("b")) {
+            b(x, y, tn, lx, ly, mx, my, tulostus);
+            kysyUusinta(x, y, tn, lx, ly, mx, my, tulostus);
+        }
+    }
+
+    public void vertaa(int x, int y, double tn, int lx, int ly, int mx, int my) {
+        System.out.println("Montako toista tehdään? (1-1000)");
+        int kerrat = kysyKokonaisluku(1, 1000);
+        long aikaBellman = 0;
+        long aikaDijkstra = 0;
+        for (int i = 0; i < kerrat; i++) {
+            aikaBellman += b(x, y, tn, lx, ly, mx, my, "e");
+            aikaDijkstra += d(x, y, tn, lx, ly, mx, my, "e");
+        }
+        aikaBellman = aikaBellman / kerrat;
+        aikaDijkstra = aikaDijkstra / kerrat;
+
+        System.out.println("\nBellman-Fordin keskiarvo: " + aikaBellman + " ms.");
+        System.out.println("Dijkstran keskiarvo: " + aikaDijkstra + " ms.");
+    }
+
 }

@@ -24,9 +24,7 @@ public class BellmanFord extends Algoritmi {
      */
     public void suoritaBellmanFord() {
         initialiseSingleSource();
-        for (int a = 0; a < kokox*kokoy; a++) {
-            
-        
+        for (int a = 0; a < kokox*kokoy; a++) {  
         for (int j = 0; j < kokoy; j++) {
             for (int i = 0; i < kokox; i++) {
                 Solmu alkio = taulukko.getSolmu(i, j);

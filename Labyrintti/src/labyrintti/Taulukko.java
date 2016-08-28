@@ -33,18 +33,18 @@ public class Taulukko {
     
     
     public Solmu[][] luoTaulukko(double SeinanTodnak) {       
-        Random arpoja = new Random();       
+        Random arpoja = new Random();    
         for (int i = 0; i < kokox; i++) {
             for (int j = 0; j < kokoy; j++) {
                 Solmu solmu = new Solmu(i, j);
                 if (arpoja.nextDouble() < SeinanTodnak) {
                     solmu.setPaasy(false);
-                    solmu.setArvo('E');
+                    solmu.setArvo('█');
                     solmu.setPaino(kokox*kokoy+3);
                 }
                 taulukko[i][j] = solmu;
             }
-        }
+        }      
         return taulukko;
     }
     

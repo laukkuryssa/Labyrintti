@@ -26,7 +26,7 @@ public class Solmu {
         this.x = x;
         this.jnro = 1;
         this.y = y;
-        this.arvo = 'P';
+        this.arvo = ' ';
         this.paasy = true;
         this.paino = 1;
         this.kayty = false;
@@ -99,8 +99,6 @@ public class Solmu {
 
     public void setPath(Solmu path) {
         this.path = path;
-        
-        System.out.println(this.x + " - " + this.y + "->" + path.getX() + " - " + path.getY());
     }
     
     public int getX() {

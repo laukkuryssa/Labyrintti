@@ -44,7 +44,6 @@ public class Dijkstra extends Algoritmi {
         }
         while (keko.getKoko() > 0) {
             Solmu u = keko.poppaa();
-//            System.out.println(u.getX() + ", " + u.getY() + " " + u.getPaino());
             if (!u.getKayty()) {
                 u.setKayty(true);
                 for (int i = 0; i < 4; i++) {

@@ -48,9 +48,6 @@ public class Minimikeko {
      *
      */
     public Solmu vasen(Solmu alkio) {
-//        if (onkoLehti(alkio)) {
-//            return null;
-//        }
         return A[alkio.getJnro() * 2];
     }
 
@@ -64,9 +61,6 @@ public class Minimikeko {
      *
      */
     public Solmu oikea(Solmu alkio) {
-//        if (onkoLehti(alkio)) {
-//            return null;
-//        }
         return A[alkio.getJnro() * 2 + 1];
     }
 
@@ -87,14 +81,6 @@ public class Minimikeko {
     }
 
     /**
-     * Metodi onkoLehti tarkistaa, onko kyseisellä solmulla lapsia.
-     *
-     */
-    public boolean onkoLehti(Solmu i) {
-        return (i.getJnro() <= koko / 2);
-    }
-
-    /**
      * Metodi lisaa lisää uuden solmun kekoon ja sijoittaa sen oikealle
      * paikalleen. Tarkalleen tämä tapahtuu siten, että ensin tietoa keon koosta
      * muokataan. Sitten taulukkoon lisätään viimeiselle paikalle uusi solmu.
@@ -104,13 +90,11 @@ public class Minimikeko {
      *
      */
     public void lisaa(Solmu alkio) {
-
         A[++koko] = alkio;
         alkio.setJnro(koko);
         if (alkio.getJnro() != 1) {
             while (alkio.getJnro() != 1 && vanhempi(alkio).getPaino() > alkio.getPaino()) {
                 if (vanhempi(alkio).getJnro() == 1) {
-                    System.out.println("HÄLYTYS" + alkio.getX() + " " + alkio.getY());
                 }
                 vaihda(vanhempi(alkio), alkio);
             }
@@ -155,9 +139,6 @@ public class Minimikeko {
      *
      */
     public void heapify(Solmu i) {
-//        if (onkoLehti(i)) {
-//            return;
-//        }
         if (vasen(i) != null && oikea(i) != null) {
             if (i.getPaino() > vasen(i).getPaino() || i.getPaino() > oikea(i).getPaino()) {
                 if (vasen(i).getPaino() < oikea(i).getPaino()) {

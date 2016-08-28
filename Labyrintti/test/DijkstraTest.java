@@ -12,36 +12,35 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import tietorakenteet.BellmanFord;
+import tietorakenteet.Dijkstra;
 
 /**
  *
  * @author timohaut
  */
-public class BellmanFordTest {
-
-    public BellmanFordTest() {
+public class DijkstraTest {
+    
+    public DijkstraTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
-        Taulukko labyrintti2x2 = new Taulukko(5, 5);
-        labyrintti2x2.luoTaulukko(0);
     }
-
+    
     @After
     public void tearDown() {
     }
-
+    
     @Test
-    public void KulmastaKeskelle() {
+    public void kulmastaKeskelle() {
         Taulukko labyrintti5x5 = new Taulukko(5, 5);
         labyrintti5x5.luoTaulukko(0);
         labyrintti5x5.getSolmu(1, 3).setPaasy(false);
@@ -66,8 +65,8 @@ public class BellmanFordTest {
             }
         }
 
-        BellmanFord hakija = new BellmanFord(5, 5, labyrintti5x5, 0, 0, 2, 2);
-        hakija.suoritaBellmanFord();
+        Dijkstra hakija = new Dijkstra(5, 5, labyrintti5x5, 0, 0, 2, 2);
+        hakija.suoritaDijkstra();
         hakija.lyhinPolku();
         String tavoite = "\nRRRRR\n████R\nRRR█R\nR███R\nRRRRR";
         assertEquals(tavoite, labyrintti5x5.toString());
@@ -85,14 +84,10 @@ public class BellmanFordTest {
                 labyrintti5x5.haeNaapurit(labyrintti5x5.getSolmu(i, j));
             }
         }
-        hakija.suoritaBellmanFord();
+        hakija.suoritaDijkstra();
         hakija.lyhinPolku();
         String tavoite2 = "\nRR   \n█R██ \n RR█ \n ███ \n     ";
         assertEquals(tavoite2, labyrintti5x5.toString());
     }
 
-    @Test
-    public void KulmastaKulmaan() {
-        
-    }
 }
