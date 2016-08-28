@@ -15,8 +15,8 @@ public class Kayttoliittyma {
     Scanner lukija = new Scanner(System.in);
 
     public void kaynnista() {
+        System.out.println("Tervetuloa!");
         while (true) {
-            System.out.println("Tervetuloa!");
             System.out.println("Labyrinttihaku, paina 1");
             System.out.println("Poistu, paina 2");
             String numero = lukija.nextLine();

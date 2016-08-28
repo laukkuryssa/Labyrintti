@@ -68,8 +68,8 @@ public class Solmu {
         this.paino = paino;
     }
     
-    public void setKayty() {
-        this.kayty = true;
+    public void setKayty(boolean kayty) {
+        this.kayty = kayty;
     }
     
     public boolean getKayty() {
