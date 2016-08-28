@@ -184,11 +184,10 @@ public class Minimikeko {
      * mikäli se on kovempi, kuin entinen. Ensin siis tarkistetaan, onko
      * kovempi.
      */
-    public void heapDecKey(Solmu i, int uusiPaino) {
-        if (uusiPaino < i.getPaino()) {
-            i.setPaino(uusiPaino);
-            heapify(i);
+    public void heapDecKey(Solmu i) {
+        while (i.getJnro() != 1 && i.getArvo() < vanhempi(i).getArvo()) {
+            vaihda(i, vanhempi(i));
         }
-
     }
+
 }

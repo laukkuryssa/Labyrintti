@@ -13,6 +13,7 @@ import labyrintti.Taulukko;
 public class Dijkstra extends Algoritmi {
 
     private Minimikeko keko;
+    private Solmu[] S;
 
     /**
      * @param keko on Minimikeko, jota käytetään apuna Dijkstrassa.
@@ -20,6 +21,7 @@ public class Dijkstra extends Algoritmi {
     public Dijkstra(int x, int y, Taulukko taulukko, int alkux, int alkuy, int loppux, int loppuy) {
         super(x, y, taulukko, alkux, alkuy, loppux, loppuy);
         keko = new Minimikeko();
+        S = new Solmu[100000];
     }
 
     /**
@@ -31,6 +33,7 @@ public class Dijkstra extends Algoritmi {
      * naapurisolmujen (jotka siis vielä ovat keossa) paikka keossa.
      */
     public void suoritaDijkstra() {
+        int s = 0;
         initialiseSingleSource();
         for (int i = 0; i < kokox; i++) {
             for (int j = 0; j < kokoy; j++) {
@@ -42,16 +45,24 @@ public class Dijkstra extends Algoritmi {
         }
         while (keko.getKoko() > 0) {
             Solmu u = keko.poppaa();
+            S[s] = u;
+            s++;
             System.out.println(u.getX() + " " + u.getY());
             for (int i = 0; i < 4; i++) {
                 Solmu v = u.getVieruslista()[i];
                 if (v != null) {
                     relax(u, v);
-                    keko.heapify(v);
+                    keko.heapDecKey(v);                                   
                 }
             }
         }
+    }
 
+    private int vertaa(Solmu a, Solmu b) {
+        if (a.getX() == b.getX() && a.getY() == b.getY()) {
+            return 1;
+        }
+        return 0;
     }
 
 }

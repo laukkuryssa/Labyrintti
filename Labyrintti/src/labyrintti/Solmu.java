@@ -108,4 +108,11 @@ public class Solmu {
         this.y = y;
     }
     
+    public int vertaa(Solmu a, Solmu b) {
+        if (a.getX() == b.getX() && a.getY() == b.getY()) {
+            return 1;
+        }
+        return 0;
+    }
+    
 }
