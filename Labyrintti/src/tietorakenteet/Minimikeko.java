@@ -134,7 +134,7 @@ public class Minimikeko {
         koko--;
         viimeinen.setJnro(1);
         A[1] = viimeinen;
-
+        A[koko+1] = null;
         heapify(A[1]);
         return popattava;
     }

@@ -54,7 +54,6 @@ public class Dijkstra extends Algoritmi {
                         keko.heapDecKey(v);
                     }
                 }
-                u = null;
             }
         }
     }
