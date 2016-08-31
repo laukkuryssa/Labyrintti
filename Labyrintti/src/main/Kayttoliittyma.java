@@ -37,7 +37,7 @@ public class Kayttoliittyma {
                 int my = kysyKokonaisluku(1, y);
                 System.out.println("Haluatko verrata Dijkstraa ja Bellman-Fordia? (k/e)");
                 String vertailuhalu = lukija.nextLine();
-                if (!vertailuhalu.equals("k") && !vertailuhalu.equals("e")) {
+                while (!vertailuhalu.equals("k") && !vertailuhalu.equals("e")) {
                     System.out.println("Syötä k tai e.");
                     vertailuhalu = lukija.nextLine();
                 }
@@ -73,6 +73,8 @@ public class Kayttoliittyma {
                     if (vertailuhalu.equals("k")) {
                         vertaa(x, y, tn, lx, ly, mx, my);
                     }
+                } if (vertailuhalu.equals("k")) {
+                    vertaa(x, y, tn, lx, ly, mx, my);
                 }
             } else if (numero.equals("2")) {
                 System.out.println("Näkemiin.");
@@ -132,13 +134,13 @@ public class Kayttoliittyma {
                 Dijkstra hakija = new Dijkstra(x, y, labyrintti, lx - 1, ly - 1, mx - 1, my - 1);
                 aikaAlussa = System.currentTimeMillis();
                 hakija.suoritaDijkstra();
-                hakija.lyhinPolku();
                 aikaLopussa = System.currentTimeMillis();
+                hakija.lyhinPolku();
                 if (tulostus.equals("k")) {
                     System.out.println(s);
                     System.out.println(labyrintti.toString());
                 }
-                System.out.println("Operaatioon kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+                System.out.println("Dijkstraan kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
                 return aikaLopussa - aikaAlussa;
             } catch (NullPointerException exception) {
             }
@@ -161,13 +163,13 @@ public class Kayttoliittyma {
                 BellmanFord hakija = new BellmanFord(x, y, labyrintti, lx - 1, ly - 1, mx - 1, my - 1);
                 aikaAlussa = System.currentTimeMillis();
                 hakija.suoritaBellmanFord();
-                hakija.lyhinPolku();
                 aikaLopussa = System.currentTimeMillis();
+                hakija.lyhinPolku();
                 if (tulostus.equals("k")) {
                     System.out.println(s);
                     System.out.println(labyrintti.toString());
                 }
-                System.out.println("Operaatioon kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+                System.out.println("Bellman-Fordiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
                 return aikaLopussa - aikaAlussa;
             } catch (NullPointerException exception) {
             }
